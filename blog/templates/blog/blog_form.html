@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.media }} <!-- This is CRITICAL for CKEditor to work -->
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">
+                    {% if object %}Update Post{% else %}Create Post{% endif %}
+                </legend>
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="alert alert-danger mt-1 p-2">
+                                {{ field.errors.as_text }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <div class="form-group mt-3">
+                <button class="btn btn-primary" type="submit">Submit Post</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

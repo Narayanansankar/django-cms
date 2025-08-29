@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center main-content-animate">
+    <div class="col-md-6 col-lg-5">
+
+        <!-- Glassmorphism Card Effect -->
+        <div class="card" style="background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-white">Welcome Back!</h2>
+                    <p class="text-white-50">Log in to continue your journey.</p>
+                </div>
+
+                <!-- Display form errors, if any -->
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    Your username and password didn't match. Please try again.
+                </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Custom Form Rendering for Better Styling -->
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label text-white">Username</label>
+                        {{ form.username }}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.password.id_for_label }}" class="form-label text-white">Password</label>
+                        {{ form.password }}
+                    </div>
+
+                    <div class="d-grid">
+                        <!-- THE BUTTON NOW HAS THE CORRECT CSS CLASS -->
+                        <button type="submit" class="btn btn-primary btn-lg">Log In</button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-4">
+                    <small class="text-white-50">
+                        Don't have an account? <a href="{% url 'signup' %}" class="fw-bold text-white">Sign Up</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

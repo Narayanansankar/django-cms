@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Apply our fade-in animation to the whole article card -->
+    <div class="card p-4 p-md-5 main-content-animate">
+        <article class="blog-post">
+            <h2 class="display-5 mb-3" style="color: var(--primary-color);">{{ object.title }}</h2>
+            <p class="blog-post-meta text-muted">
+                By {{ object.author.username }} on {{ object.created_at|date:"F j, Y" }}
+            </p>
+
+            <!-- Show Edit/Delete buttons if the user is the author -->
+            {% if user == object.author %}
+                <div class="my-3">
+                    <a href="{% url 'blog-update' object.pk %}" class="btn btn-secondary btn-sm">Edit Post</a>
+                    <a href="{% url 'blog-delete' object.pk %}" class="btn btn-danger btn-sm">Delete Post</a>
+                </div>
+            {% endif %}
+
+            <hr class="my-4">
+
+            <div class="post-content lh-lg">
+                {{ object.content|safe }}
+            </div>
+        </article>
+    </div>
+{% endblock %}

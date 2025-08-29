@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center main-content-animate">
+    <div class="col-md-8 col-lg-6">
+
+        <!-- Glassmorphism Card Effect -->
+        <div class="card" style="background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-white">Join Our Community</h2>
+                    <p class="text-white-50">Create an account to start sharing your stories.</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Custom Form Rendering for Better Styling -->
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label text-white">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-text text-white-50">{{ field.help_text|safe }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger mt-1 p-1 small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="d-grid mt-4">
+                        <!-- THE BUTTON NOW HAS THE CORRECT CSS CLASS -->
+                        <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-4">
+                    <small class="text-white-50">
+                        Already have an account? <a href="{% url 'login' %}" class="fw-bold text-white">Log In</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
